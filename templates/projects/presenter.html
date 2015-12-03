@@ -3,6 +3,10 @@
 {% set active_project = project.short_name %}
 
 {% block content %}
+{% set qualification_status = emit_event("qualification_test", project_id=project.id, project_short_name=project.short_name,  current_user=current_user) %}
+{% if qualification_status %}
+{{ qualification_status }}
+{% else  %}
 <script>
     Modernizr.load({
             test: window.JSON,
@@ -24,6 +28,7 @@
     </div>
 </div>
 {% endif %}
+
 {{ project.info.task_presenter|safe }}
 
 
@@ -34,5 +39,5 @@ en
 {{ current_user.locale }}
 {% endif %}
 </div>
-
+{% endif %}
 {% endblock %}
